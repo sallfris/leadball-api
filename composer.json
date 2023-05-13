@@ -1,0 +1,38 @@
+{
+    "name": "sallfris/ladball-api",
+    "description": "",
+    "keywords": [
+        "swagger",
+        "php",
+        "sdk",
+        "api",
+        "ladball"
+    ],
+    "homepage": "https://github.com/sallfris/leadball-api",
+    "license": "MPL-2.0",
+    "authors": [
+        {
+            "name": "sallfris",
+            "homepage": "https://github.com/sallfris"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "^9.6",
+        "squizlabs/php_codesniffer": "~2.6",
+        "friendsofphp/php-cs-fixer": "~v3.16.0"
+    },
+    "autoload": {
+        "psr-4": { "sallfris\\Leadball\\Client\\" : "lib/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "sallfris\\Leadball\\Client\\" : "test/" }
+    }
+}
