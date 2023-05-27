@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel
+ * SubmitHsmForApprovalDtoMeta
  *
  * PHP version 5
  *
@@ -29,17 +29,18 @@
 namespace sallfris\Leadball\Client\Model;
 
 use ArrayAccess;
+use JsonException;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Channel Class Doc Comment
+ * SubmitHsmForApprovalDtoMeta Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Channel implements ModelInterface, ArrayAccess
+class SubmitHsmForApprovalDtoMeta implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +49,7 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Channel';
+    protected static $swaggerModelName = 'SubmitHsmForApprovalDto_meta';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,11 +57,13 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'type' => 'string',
-        'name' => 'string',
-        'account_id' => 'string',
-        'status' => 'string'];
+        'language_code' => 'string',
+        'category' => 'string',
+        'vertical' => 'string',
+        'template_type' => 'string',
+        'example' => 'string',
+        'example_media' => 'string',
+        'enable_sample' => 'bool'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -68,11 +71,13 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'type' => null,
-        'name' => null,
-        'account_id' => null,
-        'status' => null];
+        'language_code' => null,
+        'category' => null,
+        'vertical' => null,
+        'template_type' => null,
+        'example' => null,
+        'example_media' => null,
+        'enable_sample' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -101,11 +106,13 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'type' => 'type',
-        'name' => 'name',
-        'account_id' => 'accountId',
-        'status' => 'status'];
+        'language_code' => 'languageCode',
+        'category' => 'category',
+        'vertical' => 'vertical',
+        'template_type' => 'templateType',
+        'example' => 'example',
+        'example_media' => 'exampleMedia',
+        'enable_sample' => 'enableSample'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -113,11 +120,13 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'type' => 'setType',
-        'name' => 'setName',
-        'account_id' => 'setAccountId',
-        'status' => 'setStatus'];
+        'language_code' => 'setLanguageCode',
+        'category' => 'setCategory',
+        'vertical' => 'setVertical',
+        'template_type' => 'setTemplateType',
+        'example' => 'setExample',
+        'example_media' => 'setExampleMedia',
+        'enable_sample' => 'setEnableSample'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -125,11 +134,13 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'type' => 'getType',
-        'name' => 'getName',
-        'account_id' => 'getAccountId',
-        'status' => 'getStatus'];
+        'language_code' => 'getLanguageCode',
+        'category' => 'getCategory',
+        'vertical' => 'getVertical',
+        'template_type' => 'getTemplateType',
+        'example' => 'getExample',
+        'example_media' => 'getExampleMedia',
+        'enable_sample' => 'getEnableSample'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -172,22 +183,26 @@ class Channel implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
     
-    const TYPE_TELEGRAM = 'TELEGRAM';
-    const TYPE_WHATSAPP_GUPSHUP = 'WHATSAPP_GUPSHUP';
-    const STATUS_CONNECTED = 'CONNECTED';
-    const STATUS_CONNECTING = 'CONNECTING';
-    const STATUS_ERROR = 'ERROR';
+    const CATEGORY_TRANSACTIONAL = 'TRANSACTIONAL';
+    const CATEGORY_MARKETING = 'MARKETING';
+    const CATEGORY_OTP = 'OTP';
+    const TEMPLATE_TYPE_TEXT = 'TEXT';
+    const TEMPLATE_TYPE_IMAGE = 'IMAGE';
+    const TEMPLATE_TYPE_DOCUMENT = 'DOCUMENT';
+    const TEMPLATE_TYPE_VIDEO = 'VIDEO';
+    const TEMPLATE_TYPE_LOCATION = 'LOCATION';
     
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getTypeAllowableValues()
+    public function getCategoryAllowableValues()
     {
         return [
-            self::TYPE_TELEGRAM,
-            self::TYPE_WHATSAPP_GUPSHUP,];
+            self::CATEGORY_TRANSACTIONAL,
+            self::CATEGORY_MARKETING,
+            self::CATEGORY_OTP,];
     }
     
     /**
@@ -195,12 +210,14 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @return string[]
      */
-    public function getStatusAllowableValues()
+    public function getTemplateTypeAllowableValues()
     {
         return [
-            self::STATUS_CONNECTED,
-            self::STATUS_CONNECTING,
-            self::STATUS_ERROR,];
+            self::TEMPLATE_TYPE_TEXT,
+            self::TEMPLATE_TYPE_IMAGE,
+            self::TEMPLATE_TYPE_DOCUMENT,
+            self::TEMPLATE_TYPE_VIDEO,
+            self::TEMPLATE_TYPE_LOCATION,];
     }
     
     /**
@@ -218,11 +235,13 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['language_code'] = isset($data['language_code']) ? $data['language_code'] : null;
+        $this->container['category'] = isset($data['category']) ? $data['category'] : null;
+        $this->container['vertical'] = isset($data['vertical']) ? $data['vertical'] : null;
+        $this->container['template_type'] = isset($data['template_type']) ? $data['template_type'] : null;
+        $this->container['example'] = isset($data['example']) ? $data['example'] : null;
+        $this->container['example_media'] = isset($data['example_media']) ? $data['example_media'] : null;
+        $this->container['enable_sample'] = isset($data['enable_sample']) ? $data['enable_sample'] : null;
     }
     
     /**
@@ -234,18 +253,22 @@ class Channel implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
         
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!is_null($this->container['category']) && !in_array($this->container['category'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
-                "invalid value for 'type', must be one of '%s'",
+                "invalid value for 'category', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
         
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+        $allowedValues = $this->getTemplateTypeAllowableValues();
+        if (!is_null($this->container['template_type']) && !in_array(
+                $this->container['template_type'],
+                $allowedValues,
+                true
+            )) {
             $invalidProperties[] = sprintf(
-                "invalid value for 'status', must be one of '%s'",
+                "invalid value for 'template_type', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -266,139 +289,187 @@ class Channel implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
+     * Gets language_code
      *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getLanguageCode()
     {
-        return $this->container['id'];
+        return $this->container['language_code'];
     }
     
     /**
-     * Sets id
+     * Sets language_code
      *
-     * @param int $id id
+     * @param string $languageCode language_code
      *
      * @return $this
      */
-    public function setId($id)
+    public function setLanguageCode($languageCode)
     {
-        $this->container['id'] = $id;
+        $this->container['language_code'] = $languageCode;
         
         return $this;
     }
     
     /**
-     * Gets type
+     * Gets category
      *
      * @return string
      */
-    public function getType()
+    public function getCategory()
     {
-        return $this->container['type'];
+        return $this->container['category'];
     }
     
     /**
-     * Sets type
+     * Sets category
      *
-     * @param string $type ChannelType
+     * @param string $category Category
      *
      * @return $this
      */
-    public function setType($type)
+    public function setCategory($category)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
+        $allowedValues = $this->getCategoryAllowableValues();
+        if (!is_null($category) && !in_array($category, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'type', must be one of '%s'",
+                    "Invalid value for 'category', must be one of '%s'",
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['type'] = $type;
+        $this->container['category'] = $category;
         
         return $this;
     }
     
     /**
-     * Gets name
+     * Gets vertical
      *
      * @return string
      */
-    public function getName()
+    public function getVertical()
     {
-        return $this->container['name'];
+        return $this->container['vertical'];
     }
     
     /**
-     * Sets name
+     * Sets vertical
      *
-     * @param string $name name
+     * @param string $vertical vertical
      *
      * @return $this
      */
-    public function setName($name)
+    public function setVertical($vertical)
     {
-        $this->container['name'] = $name;
+        $this->container['vertical'] = $vertical;
         
         return $this;
     }
     
     /**
-     * Gets account_id
+     * Gets template_type
      *
      * @return string
      */
-    public function getAccountId()
+    public function getTemplateType()
     {
-        return $this->container['account_id'];
+        return $this->container['template_type'];
     }
     
     /**
-     * Sets account_id
+     * Sets template_type
      *
-     * @param string $accountId account_id
+     * @param string $templateType TemplateType
      *
      * @return $this
      */
-    public function setAccountId($accountId)
+    public function setTemplateType($templateType)
     {
-        $this->container['account_id'] = $accountId;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-    
-    /**
-     * Sets status
-     *
-     * @param string $status ChannelStatus
-     *
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
+        $allowedValues = $this->getTemplateTypeAllowableValues();
+        if (!is_null($templateType) && !in_array($templateType, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'status', must be one of '%s'",
+                    "Invalid value for 'template_type', must be one of '%s'",
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['status'] = $status;
+        $this->container['template_type'] = $templateType;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets example
+     *
+     * @return string
+     */
+    public function getExample()
+    {
+        return $this->container['example'];
+    }
+    
+    /**
+     * Sets example
+     *
+     * @param string $example example
+     *
+     * @return $this
+     */
+    public function setExample($example)
+    {
+        $this->container['example'] = $example;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets example_media
+     *
+     * @return string
+     */
+    public function getExampleMedia()
+    {
+        return $this->container['example_media'];
+    }
+    
+    /**
+     * Sets example_media
+     *
+     * @param string $exampleMedia example_media
+     *
+     * @return $this
+     */
+    public function setExampleMedia($exampleMedia)
+    {
+        $this->container['example_media'] = $exampleMedia;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets enable_sample
+     *
+     * @return bool
+     */
+    public function getEnableSample()
+    {
+        return $this->container['enable_sample'];
+    }
+    
+    /**
+     * Sets enable_sample
+     *
+     * @param bool $enableSample Must always be true
+     *
+     * @return $this
+     */
+    public function setEnableSample($enableSample)
+    {
+        $this->container['enable_sample'] = $enableSample;
         
         return $this;
     }
@@ -464,16 +535,12 @@ class Channel implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     * @throws JsonException
      */
-    public function __toString()
+    public function __toString(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return (string) json_encode(
-                ObjectSerializer::sanitizeForSerialization($this),
-                JSON_PRETTY_PRINT
-            );
-        }
+        $jsonOptions = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR : 0;
         
-        return (string) json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), $jsonOptions);
     }
 }

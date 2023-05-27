@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel
+ * MessageContent
  *
  * PHP version 5
  *
@@ -29,17 +29,18 @@
 namespace sallfris\Leadball\Client\Model;
 
 use ArrayAccess;
+use JsonException;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Channel Class Doc Comment
+ * MessageContent Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Channel implements ModelInterface, ArrayAccess
+class MessageContent implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +49,7 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Channel';
+    protected static $swaggerModelName = 'Message_content';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,11 +57,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'type' => 'string',
-        'name' => 'string',
-        'account_id' => 'string',
-        'status' => 'string'];
+        'date' => 'string',
+        'text' => 'string',
+        'attachments' => '\sallfris\Leadball\Client\Model\Attachment[]',
+        'buttons' => '\sallfris\Leadball\Client\Model\Button[]',
+        'quoted_messages' => 'object[]'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -68,11 +69,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'type' => null,
-        'name' => null,
-        'account_id' => null,
-        'status' => null];
+        'date' => null,
+        'text' => null,
+        'attachments' => null,
+        'buttons' => null,
+        'quoted_messages' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -101,11 +102,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'type' => 'type',
-        'name' => 'name',
-        'account_id' => 'accountId',
-        'status' => 'status'];
+        'date' => 'date',
+        'text' => 'text',
+        'attachments' => 'attachments',
+        'buttons' => 'buttons',
+        'quoted_messages' => 'quotedMessages'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -113,11 +114,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'type' => 'setType',
-        'name' => 'setName',
-        'account_id' => 'setAccountId',
-        'status' => 'setStatus'];
+        'date' => 'setDate',
+        'text' => 'setText',
+        'attachments' => 'setAttachments',
+        'buttons' => 'setButtons',
+        'quoted_messages' => 'setQuotedMessages'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -125,11 +126,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'type' => 'getType',
-        'name' => 'getName',
-        'account_id' => 'getAccountId',
-        'status' => 'getStatus'];
+        'date' => 'getDate',
+        'text' => 'getText',
+        'attachments' => 'getAttachments',
+        'buttons' => 'getButtons',
+        'quoted_messages' => 'getQuotedMessages'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -172,36 +173,6 @@ class Channel implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
     
-    const TYPE_TELEGRAM = 'TELEGRAM';
-    const TYPE_WHATSAPP_GUPSHUP = 'WHATSAPP_GUPSHUP';
-    const STATUS_CONNECTED = 'CONNECTED';
-    const STATUS_CONNECTING = 'CONNECTING';
-    const STATUS_ERROR = 'ERROR';
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_TELEGRAM,
-            self::TYPE_WHATSAPP_GUPSHUP,];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_CONNECTED,
-            self::STATUS_CONNECTING,
-            self::STATUS_ERROR,];
-    }
     
     /**
      * Associative array for storing property values
@@ -218,11 +189,11 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['date'] = isset($data['date']) ? $data['date'] : null;
+        $this->container['text'] = isset($data['text']) ? $data['text'] : null;
+        $this->container['attachments'] = isset($data['attachments']) ? $data['attachments'] : null;
+        $this->container['buttons'] = isset($data['buttons']) ? $data['buttons'] : null;
+        $this->container['quoted_messages'] = isset($data['quoted_messages']) ? $data['quoted_messages'] : null;
     }
     
     /**
@@ -232,25 +203,7 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-        
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'type', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-        
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'status', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-        
-        return $invalidProperties;
+        return [];
     }
     
     /**
@@ -266,139 +219,121 @@ class Channel implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
+     * Gets date
      *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getDate()
     {
-        return $this->container['id'];
+        return $this->container['date'];
     }
     
     /**
-     * Sets id
+     * Sets date
      *
-     * @param int $id id
+     * @param string $date date
      *
      * @return $this
      */
-    public function setId($id)
+    public function setDate($date)
     {
-        $this->container['id'] = $id;
+        $this->container['date'] = $date;
         
         return $this;
     }
     
     /**
-     * Gets type
+     * Gets text
      *
      * @return string
      */
-    public function getType()
+    public function getText()
     {
-        return $this->container['type'];
+        return $this->container['text'];
     }
     
     /**
-     * Sets type
+     * Sets text
      *
-     * @param string $type ChannelType
+     * @param string $text text
      *
      * @return $this
      */
-    public function setType($type)
+    public function setText($text)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'type', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
+        $this->container['text'] = $text;
         
         return $this;
     }
     
     /**
-     * Gets name
+     * Gets attachments
      *
-     * @return string
+     * @return \sallfris\Leadball\Client\Model\Attachment[]
      */
-    public function getName()
+    public function getAttachments()
     {
-        return $this->container['name'];
+        return $this->container['attachments'];
     }
     
     /**
-     * Sets name
+     * Sets attachments
      *
-     * @param string $name name
+     * @param \sallfris\Leadball\Client\Model\Attachment[] $attachments attachments
      *
      * @return $this
      */
-    public function setName($name)
+    public function setAttachments($attachments)
     {
-        $this->container['name'] = $name;
+        $this->container['attachments'] = $attachments;
         
         return $this;
     }
     
     /**
-     * Gets account_id
+     * Gets buttons
      *
-     * @return string
+     * @return \sallfris\Leadball\Client\Model\Button[]
      */
-    public function getAccountId()
+    public function getButtons()
     {
-        return $this->container['account_id'];
+        return $this->container['buttons'];
     }
     
     /**
-     * Sets account_id
+     * Sets buttons
      *
-     * @param string $accountId account_id
+     * @param \sallfris\Leadball\Client\Model\Button[] $buttons buttons
      *
      * @return $this
      */
-    public function setAccountId($accountId)
+    public function setButtons($buttons)
     {
-        $this->container['account_id'] = $accountId;
+        $this->container['buttons'] = $buttons;
         
         return $this;
     }
     
     /**
-     * Gets status
+     * Gets quoted_messages
      *
-     * @return string
+     * @return object[]
      */
-    public function getStatus()
+    public function getQuotedMessages()
     {
-        return $this->container['status'];
+        return $this->container['quoted_messages'];
     }
     
     /**
-     * Sets status
+     * Sets quoted_messages
      *
-     * @param string $status ChannelStatus
+     * @param object[] $quotedMessages quoted_messages
      *
      * @return $this
      */
-    public function setStatus($status)
+    public function setQuotedMessages($quotedMessages)
     {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'status', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
+        $this->container['quoted_messages'] = $quotedMessages;
         
         return $this;
     }
@@ -464,16 +399,12 @@ class Channel implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     * @throws JsonException
      */
-    public function __toString()
+    public function __toString(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return (string) json_encode(
-                ObjectSerializer::sanitizeForSerialization($this),
-                JSON_PRETTY_PRINT
-            );
-        }
+        $jsonOptions = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR : 0;
         
-        return (string) json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), $jsonOptions);
     }
 }

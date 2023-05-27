@@ -1,6 +1,6 @@
 <?php
 /**
- * Chat
+ * InlineResponse200
  *
  * PHP version 5
  *
@@ -29,17 +29,18 @@
 namespace sallfris\Leadball\Client\Model;
 
 use ArrayAccess;
+use JsonException;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Chat Class Doc Comment
+ * InlineResponse200 Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Chat implements ModelInterface, ArrayAccess
+class InlineResponse200 implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +49,7 @@ class Chat implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Chat';
+    protected static $swaggerModelName = 'inline_response_200';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,13 +57,7 @@ class Chat implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'channel' => '\sallfris\Leadball\Client\Model\ChatChannel',
-        'account_id' => 'string',
-        'firstname' => 'string',
-        'lastname' => 'string',
-        'username' => 'string',
-        'avatar_url' => 'string'];
+        'count' => 'int'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -70,13 +65,7 @@ class Chat implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'channel' => null,
-        'account_id' => null,
-        'firstname' => null,
-        'lastname' => null,
-        'username' => null,
-        'avatar_url' => null];
+        'count' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -105,13 +94,7 @@ class Chat implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'channel' => 'channel',
-        'account_id' => 'accountId',
-        'firstname' => 'firstname',
-        'lastname' => 'lastname',
-        'username' => 'username',
-        'avatar_url' => 'avatarUrl'];
+        'count' => 'count'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -119,13 +102,7 @@ class Chat implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'channel' => 'setChannel',
-        'account_id' => 'setAccountId',
-        'firstname' => 'setFirstname',
-        'lastname' => 'setLastname',
-        'username' => 'setUsername',
-        'avatar_url' => 'setAvatarUrl'];
+        'count' => 'setCount'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -133,13 +110,7 @@ class Chat implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'channel' => 'getChannel',
-        'account_id' => 'getAccountId',
-        'firstname' => 'getFirstname',
-        'lastname' => 'getLastname',
-        'username' => 'getUsername',
-        'avatar_url' => 'getAvatarUrl'];
+        'count' => 'getCount'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -198,13 +169,7 @@ class Chat implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['channel'] = isset($data['channel']) ? $data['channel'] : null;
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['firstname'] = isset($data['firstname']) ? $data['firstname'] : null;
-        $this->container['lastname'] = isset($data['lastname']) ? $data['lastname'] : null;
-        $this->container['username'] = isset($data['username']) ? $data['username'] : null;
-        $this->container['avatar_url'] = isset($data['avatar_url']) ? $data['avatar_url'] : null;
+        $this->container['count'] = isset($data['count']) ? $data['count'] : null;
     }
     
     /**
@@ -230,169 +195,25 @@ class Chat implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
+     * Gets count
      *
      * @return int
      */
-    public function getId()
+    public function getCount()
     {
-        return $this->container['id'];
+        return $this->container['count'];
     }
     
     /**
-     * Sets id
+     * Sets count
      *
-     * @param int $id id
+     * @param int $count count
      *
      * @return $this
      */
-    public function setId($id)
+    public function setCount($count)
     {
-        $this->container['id'] = $id;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets channel
-     *
-     * @return \sallfris\Leadball\Client\Model\ChatChannel
-     */
-    public function getChannel()
-    {
-        return $this->container['channel'];
-    }
-    
-    /**
-     * Sets channel
-     *
-     * @param \sallfris\Leadball\Client\Model\ChatChannel $channel channel
-     *
-     * @return $this
-     */
-    public function setChannel($channel)
-    {
-        $this->container['channel'] = $channel;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets account_id
-     *
-     * @return string
-     */
-    public function getAccountId()
-    {
-        return $this->container['account_id'];
-    }
-    
-    /**
-     * Sets account_id
-     *
-     * @param string $accountId account_id
-     *
-     * @return $this
-     */
-    public function setAccountId($accountId)
-    {
-        $this->container['account_id'] = $accountId;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets firstname
-     *
-     * @return string
-     */
-    public function getFirstname()
-    {
-        return $this->container['firstname'];
-    }
-    
-    /**
-     * Sets firstname
-     *
-     * @param string $firstname firstname
-     *
-     * @return $this
-     */
-    public function setFirstname($firstname)
-    {
-        $this->container['firstname'] = $firstname;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->container['lastname'];
-    }
-    
-    /**
-     * Sets lastname
-     *
-     * @param string $lastname lastname
-     *
-     * @return $this
-     */
-    public function setLastname($lastname)
-    {
-        $this->container['lastname'] = $lastname;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->container['username'];
-    }
-    
-    /**
-     * Sets username
-     *
-     * @param string $username username
-     *
-     * @return $this
-     */
-    public function setUsername($username)
-    {
-        $this->container['username'] = $username;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets avatar_url
-     *
-     * @return string
-     */
-    public function getAvatarUrl()
-    {
-        return $this->container['avatar_url'];
-    }
-    
-    /**
-     * Sets avatar_url
-     *
-     * @param string $avatarUrl avatar_url
-     *
-     * @return $this
-     */
-    public function setAvatarUrl($avatarUrl)
-    {
-        $this->container['avatar_url'] = $avatarUrl;
+        $this->container['count'] = $count;
         
         return $this;
     }
@@ -458,16 +279,12 @@ class Chat implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     * @throws JsonException
      */
-    public function __toString()
+    public function __toString(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return (string) json_encode(
-                ObjectSerializer::sanitizeForSerialization($this),
-                JSON_PRETTY_PRINT
-            );
-        }
+        $jsonOptions = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR : 0;
         
-        return (string) json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), $jsonOptions);
     }
 }

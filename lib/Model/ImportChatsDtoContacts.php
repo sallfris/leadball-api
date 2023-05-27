@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel
+ * ImportChatsDtoContacts
  *
  * PHP version 5
  *
@@ -29,17 +29,18 @@
 namespace sallfris\Leadball\Client\Model;
 
 use ArrayAccess;
+use JsonException;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Channel Class Doc Comment
+ * ImportChatsDtoContacts Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Channel implements ModelInterface, ArrayAccess
+class ImportChatsDtoContacts implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +49,7 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Channel';
+    protected static $swaggerModelName = 'ImportChatsDto_contacts';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,11 +57,9 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'type' => 'string',
-        'name' => 'string',
         'account_id' => 'string',
-        'status' => 'string'];
+        'name' => 'string',
+        'tags' => 'string[]'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -68,11 +67,9 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'type' => null,
-        'name' => null,
         'account_id' => null,
-        'status' => null];
+        'name' => null,
+        'tags' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -101,11 +98,9 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'type' => 'type',
-        'name' => 'name',
         'account_id' => 'accountId',
-        'status' => 'status'];
+        'name' => 'name',
+        'tags' => 'tags'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -113,11 +108,9 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'type' => 'setType',
-        'name' => 'setName',
         'account_id' => 'setAccountId',
-        'status' => 'setStatus'];
+        'name' => 'setName',
+        'tags' => 'setTags'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -125,11 +118,9 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'type' => 'getType',
-        'name' => 'getName',
         'account_id' => 'getAccountId',
-        'status' => 'getStatus'];
+        'name' => 'getName',
+        'tags' => 'getTags'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -172,36 +163,6 @@ class Channel implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
     
-    const TYPE_TELEGRAM = 'TELEGRAM';
-    const TYPE_WHATSAPP_GUPSHUP = 'WHATSAPP_GUPSHUP';
-    const STATUS_CONNECTED = 'CONNECTED';
-    const STATUS_CONNECTING = 'CONNECTING';
-    const STATUS_ERROR = 'ERROR';
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_TELEGRAM,
-            self::TYPE_WHATSAPP_GUPSHUP,];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_CONNECTED,
-            self::STATUS_CONNECTING,
-            self::STATUS_ERROR,];
-    }
     
     /**
      * Associative array for storing property values
@@ -218,11 +179,9 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['tags'] = isset($data['tags']) ? $data['tags'] : null;
     }
     
     /**
@@ -232,25 +191,7 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function listInvalidProperties()
     {
-        $invalidProperties = [];
-        
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'type', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-        
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'status', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-        
-        return $invalidProperties;
+        return [];
     }
     
     /**
@@ -266,58 +207,25 @@ class Channel implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-    
-    /**
-     * Sets id
-     *
-     * @param int $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets type
+     * Gets account_id
      *
      * @return string
      */
-    public function getType()
+    public function getAccountId()
     {
-        return $this->container['type'];
+        return $this->container['account_id'];
     }
     
     /**
-     * Sets type
+     * Sets account_id
      *
-     * @param string $type ChannelType
+     * @param string $accountId account_id
      *
      * @return $this
      */
-    public function setType($type)
+    public function setAccountId($accountId)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'type', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
+        $this->container['account_id'] = $accountId;
         
         return $this;
     }
@@ -347,58 +255,25 @@ class Channel implements ModelInterface, ArrayAccess
     }
     
     /**
-     * Gets account_id
+     * Gets tags
      *
-     * @return string
+     * @return string[]
      */
-    public function getAccountId()
+    public function getTags()
     {
-        return $this->container['account_id'];
+        return $this->container['tags'];
     }
     
     /**
-     * Sets account_id
+     * Sets tags
      *
-     * @param string $accountId account_id
+     * @param string[] $tags tags
      *
      * @return $this
      */
-    public function setAccountId($accountId)
+    public function setTags($tags)
     {
-        $this->container['account_id'] = $accountId;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-    
-    /**
-     * Sets status
-     *
-     * @param string $status ChannelStatus
-     *
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'status', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
+        $this->container['tags'] = $tags;
         
         return $this;
     }
@@ -464,16 +339,12 @@ class Channel implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     * @throws JsonException
      */
-    public function __toString()
+    public function __toString(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return (string) json_encode(
-                ObjectSerializer::sanitizeForSerialization($this),
-                JSON_PRETTY_PRINT
-            );
-        }
+        $jsonOptions = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR : 0;
         
-        return (string) json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), $jsonOptions);
     }
 }

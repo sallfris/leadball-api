@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel
+ * HsmApproval
  *
  * PHP version 5
  *
@@ -29,17 +29,18 @@
 namespace sallfris\Leadball\Client\Model;
 
 use ArrayAccess;
+use JsonException;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Channel Class Doc Comment
+ * HsmApproval Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Channel implements ModelInterface, ArrayAccess
+class HsmApproval implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +49,7 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Channel';
+    protected static $swaggerModelName = 'Hsm_approval';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,11 +57,10 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'type' => 'string',
-        'name' => 'string',
-        'account_id' => 'string',
-        'status' => 'string'];
+        'external_id' => 'string',
+        'status' => 'string',
+        'rejected_reason' => 'string',
+        'channel' => '\sallfris\Leadball\Client\Model\Channel'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -68,11 +68,10 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'type' => null,
-        'name' => null,
-        'account_id' => null,
-        'status' => null];
+        'external_id' => null,
+        'status' => null,
+        'rejected_reason' => null,
+        'channel' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -101,11 +100,10 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'type' => 'type',
-        'name' => 'name',
-        'account_id' => 'accountId',
-        'status' => 'status'];
+        'external_id' => 'externalId',
+        'status' => 'status',
+        'rejected_reason' => 'rejectedReason',
+        'channel' => 'channel'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -113,11 +111,10 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'type' => 'setType',
-        'name' => 'setName',
-        'account_id' => 'setAccountId',
-        'status' => 'setStatus'];
+        'external_id' => 'setExternalId',
+        'status' => 'setStatus',
+        'rejected_reason' => 'setRejectedReason',
+        'channel' => 'setChannel'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -125,11 +122,10 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'type' => 'getType',
-        'name' => 'getName',
-        'account_id' => 'getAccountId',
-        'status' => 'getStatus'];
+        'external_id' => 'getExternalId',
+        'status' => 'getStatus',
+        'rejected_reason' => 'getRejectedReason',
+        'channel' => 'getChannel'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -172,23 +168,10 @@ class Channel implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
     
-    const TYPE_TELEGRAM = 'TELEGRAM';
-    const TYPE_WHATSAPP_GUPSHUP = 'WHATSAPP_GUPSHUP';
-    const STATUS_CONNECTED = 'CONNECTED';
-    const STATUS_CONNECTING = 'CONNECTING';
-    const STATUS_ERROR = 'ERROR';
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_TELEGRAM,
-            self::TYPE_WHATSAPP_GUPSHUP,];
-    }
+    const STATUS_ON_LB_MODERATION = 'ON_LB_MODERATION';
+    const STATUS_ON_WA_MODERATION = 'ON_WA_MODERATION';
+    const STATUS_APPROVED = 'APPROVED';
+    const STATUS_REJECTED = 'REJECTED';
     
     /**
      * Gets allowable values of the enum
@@ -198,9 +181,10 @@ class Channel implements ModelInterface, ArrayAccess
     public function getStatusAllowableValues()
     {
         return [
-            self::STATUS_CONNECTED,
-            self::STATUS_CONNECTING,
-            self::STATUS_ERROR,];
+            self::STATUS_ON_LB_MODERATION,
+            self::STATUS_ON_WA_MODERATION,
+            self::STATUS_APPROVED,
+            self::STATUS_REJECTED,];
     }
     
     /**
@@ -218,11 +202,10 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['external_id'] = isset($data['external_id']) ? $data['external_id'] : null;
         $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['rejected_reason'] = isset($data['rejected_reason']) ? $data['rejected_reason'] : null;
+        $this->container['channel'] = isset($data['channel']) ? $data['channel'] : null;
     }
     
     /**
@@ -233,14 +216,6 @@ class Channel implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-        
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'type', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
         
         $allowedValues = $this->getStatusAllowableValues();
         if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
@@ -266,106 +241,25 @@ class Channel implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-    
-    /**
-     * Sets id
-     *
-     * @param int $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets type
+     * Gets external_id
      *
      * @return string
      */
-    public function getType()
+    public function getExternalId()
     {
-        return $this->container['type'];
+        return $this->container['external_id'];
     }
     
     /**
-     * Sets type
+     * Sets external_id
      *
-     * @param string $type ChannelType
+     * @param string $externalId external_id
      *
      * @return $this
      */
-    public function setType($type)
+    public function setExternalId($externalId)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'type', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-    
-    /**
-     * Sets name
-     *
-     * @param string $name name
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets account_id
-     *
-     * @return string
-     */
-    public function getAccountId()
-    {
-        return $this->container['account_id'];
-    }
-    
-    /**
-     * Sets account_id
-     *
-     * @param string $accountId account_id
-     *
-     * @return $this
-     */
-    public function setAccountId($accountId)
-    {
-        $this->container['account_id'] = $accountId;
+        $this->container['external_id'] = $externalId;
         
         return $this;
     }
@@ -383,7 +277,7 @@ class Channel implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param string $status ChannelStatus
+     * @param string $status AprovalStatus
      *
      * @return $this
      */
@@ -399,6 +293,54 @@ class Channel implements ModelInterface, ArrayAccess
             );
         }
         $this->container['status'] = $status;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets rejected_reason
+     *
+     * @return string
+     */
+    public function getRejectedReason()
+    {
+        return $this->container['rejected_reason'];
+    }
+    
+    /**
+     * Sets rejected_reason
+     *
+     * @param string $rejectedReason rejected_reason
+     *
+     * @return $this
+     */
+    public function setRejectedReason($rejectedReason)
+    {
+        $this->container['rejected_reason'] = $rejectedReason;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets channel
+     *
+     * @return \sallfris\Leadball\Client\Model\Channel
+     */
+    public function getChannel()
+    {
+        return $this->container['channel'];
+    }
+    
+    /**
+     * Sets channel
+     *
+     * @param \sallfris\Leadball\Client\Model\Channel $channel channel
+     *
+     * @return $this
+     */
+    public function setChannel($channel)
+    {
+        $this->container['channel'] = $channel;
         
         return $this;
     }
@@ -464,16 +406,12 @@ class Channel implements ModelInterface, ArrayAccess
      * Gets the string presentation of the object
      *
      * @return string
+     * @throws JsonException
      */
-    public function __toString()
+    public function __toString(): string
     {
-        if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return (string) json_encode(
-                ObjectSerializer::sanitizeForSerialization($this),
-                JSON_PRETTY_PRINT
-            );
-        }
+        $jsonOptions = defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR : 0;
         
-        return (string) json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this), $jsonOptions);
     }
 }

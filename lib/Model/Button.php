@@ -1,6 +1,6 @@
 <?php
 /**
- * Channel
+ * Button
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use ArrayAccess;
 use sallfris\Leadball\Client\ObjectSerializer;
 
 /**
- * Channel Class Doc Comment
+ * Button Class Doc Comment
  *
  * @category Class
  * @package  sallfris\Leadball\Client
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Channel implements ModelInterface, ArrayAccess
+class Button implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
     
@@ -48,7 +48,7 @@ class Channel implements ModelInterface, ArrayAccess
      *
      * @var string
      */
-    protected static $swaggerModelName = 'Channel';
+    protected static $swaggerModelName = 'Button';
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -56,11 +56,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerTypes = [
-        'id' => 'int',
-        'type' => 'string',
-        'name' => 'string',
-        'account_id' => 'string',
-        'status' => 'string'];
+        'button_type' => 'string',
+        'text' => 'string',
+        'payload' => 'string',
+        'url' => 'string',
+        'phone' => 'string'];
     
     /**
      * Array of property to format mappings. Used for (de)serialization
@@ -68,11 +68,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $swaggerFormats = [
-        'id' => null,
-        'type' => null,
-        'name' => null,
-        'account_id' => null,
-        'status' => null];
+        'button_type' => null,
+        'text' => null,
+        'payload' => null,
+        'url' => null,
+        'phone' => null];
     
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -101,11 +101,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'id' => 'id',
-        'type' => 'type',
-        'name' => 'name',
-        'account_id' => 'accountId',
-        'status' => 'status'];
+        'button_type' => 'buttonType',
+        'text' => 'text',
+        'payload' => 'payload',
+        'url' => 'url',
+        'phone' => 'phone'];
     
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -113,11 +113,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'id' => 'setId',
-        'type' => 'setType',
-        'name' => 'setName',
-        'account_id' => 'setAccountId',
-        'status' => 'setStatus'];
+        'button_type' => 'setButtonType',
+        'text' => 'setText',
+        'payload' => 'setPayload',
+        'url' => 'setUrl',
+        'phone' => 'setPhone'];
     
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -125,11 +125,11 @@ class Channel implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'id' => 'getId',
-        'type' => 'getType',
-        'name' => 'getName',
-        'account_id' => 'getAccountId',
-        'status' => 'getStatus'];
+        'button_type' => 'getButtonType',
+        'text' => 'getText',
+        'payload' => 'getPayload',
+        'url' => 'getUrl',
+        'phone' => 'getPhone'];
     
     /**
      * Array of attributes where the key is the local name,
@@ -172,35 +172,21 @@ class Channel implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
     
-    const TYPE_TELEGRAM = 'TELEGRAM';
-    const TYPE_WHATSAPP_GUPSHUP = 'WHATSAPP_GUPSHUP';
-    const STATUS_CONNECTED = 'CONNECTED';
-    const STATUS_CONNECTING = 'CONNECTING';
-    const STATUS_ERROR = 'ERROR';
+    const BUTTON_TYPE_QUICK_REPLY = 'QUICK_REPLY';
+    const BUTTON_TYPE_URL = 'URL';
+    const BUTTON_TYPE_PHONE = 'PHONE';
     
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getTypeAllowableValues()
+    public function getButtonTypeAllowableValues()
     {
         return [
-            self::TYPE_TELEGRAM,
-            self::TYPE_WHATSAPP_GUPSHUP,];
-    }
-    
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_CONNECTED,
-            self::STATUS_CONNECTING,
-            self::STATUS_ERROR,];
+            self::BUTTON_TYPE_QUICK_REPLY,
+            self::BUTTON_TYPE_URL,
+            self::BUTTON_TYPE_PHONE,];
     }
     
     /**
@@ -218,11 +204,11 @@ class Channel implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
-        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['button_type'] = isset($data['button_type']) ? $data['button_type'] : null;
+        $this->container['text'] = isset($data['text']) ? $data['text'] : null;
+        $this->container['payload'] = isset($data['payload']) ? $data['payload'] : null;
+        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
+        $this->container['phone'] = isset($data['phone']) ? $data['phone'] : null;
     }
     
     /**
@@ -234,18 +220,14 @@ class Channel implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
         
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
+        $allowedValues = $this->getButtonTypeAllowableValues();
+        if (!is_null($this->container['button_type']) && !in_array(
+                $this->container['button_type'],
+                $allowedValues,
+                true
+            )) {
             $invalidProperties[] = sprintf(
-                "invalid value for 'type', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
-        
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'status', must be one of '%s'",
+                "invalid value for 'button_type', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -266,139 +248,130 @@ class Channel implements ModelInterface, ArrayAccess
     
     
     /**
-     * Gets id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-    
-    /**
-     * Sets id
-     *
-     * @param int $id id
-     *
-     * @return $this
-     */
-    public function setId($id)
-    {
-        $this->container['id'] = $id;
-        
-        return $this;
-    }
-    
-    /**
-     * Gets type
+     * Gets button_type
      *
      * @return string
      */
-    public function getType()
+    public function getButtonType()
     {
-        return $this->container['type'];
+        return $this->container['button_type'];
     }
     
     /**
-     * Sets type
+     * Sets button_type
      *
-     * @param string $type ChannelType
+     * @param string $buttonType ButtonType
      *
      * @return $this
      */
-    public function setType($type)
+    public function setButtonType($buttonType)
     {
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($type) && !in_array($type, $allowedValues, true)) {
+        $allowedValues = $this->getButtonTypeAllowableValues();
+        if (!is_null($buttonType) && !in_array($buttonType, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'type', must be one of '%s'",
+                    "Invalid value for 'button_type', must be one of '%s'",
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['type'] = $type;
+        $this->container['button_type'] = $buttonType;
         
         return $this;
     }
     
     /**
-     * Gets name
+     * Gets text
      *
      * @return string
      */
-    public function getName()
+    public function getText()
     {
-        return $this->container['name'];
+        return $this->container['text'];
     }
     
     /**
-     * Sets name
+     * Sets text
      *
-     * @param string $name name
+     * @param string $text text
      *
      * @return $this
      */
-    public function setName($name)
+    public function setText($text)
     {
-        $this->container['name'] = $name;
+        $this->container['text'] = $text;
         
         return $this;
     }
     
     /**
-     * Gets account_id
+     * Gets payload
      *
      * @return string
      */
-    public function getAccountId()
+    public function getPayload()
     {
-        return $this->container['account_id'];
+        return $this->container['payload'];
     }
     
     /**
-     * Sets account_id
+     * Sets payload
      *
-     * @param string $accountId account_id
+     * @param string $payload payload
      *
      * @return $this
      */
-    public function setAccountId($accountId)
+    public function setPayload($payload)
     {
-        $this->container['account_id'] = $accountId;
+        $this->container['payload'] = $payload;
         
         return $this;
     }
     
     /**
-     * Gets status
+     * Gets url
      *
      * @return string
      */
-    public function getStatus()
+    public function getUrl()
     {
-        return $this->container['status'];
+        return $this->container['url'];
     }
     
     /**
-     * Sets status
+     * Sets url
      *
-     * @param string $status ChannelStatus
+     * @param string $url url
      *
      * @return $this
      */
-    public function setStatus($status)
+    public function setUrl($url)
     {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'status', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['status'] = $status;
+        $this->container['url'] = $url;
+        
+        return $this;
+    }
+    
+    /**
+     * Gets phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->container['phone'];
+    }
+    
+    /**
+     * Sets phone
+     *
+     * @param string $phone phone
+     *
+     * @return $this
+     */
+    public function setPhone($phone)
+    {
+        $this->container['phone'] = $phone;
         
         return $this;
     }
